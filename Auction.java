@@ -56,7 +56,7 @@ public class Auction
         Lot selectedLot = getLot(lotNumber);
         if(selectedLot != null) {
             Bid aBid = new Bid(bidder, value);
-            boolean successful = selectedLot.bidFor(aBid);
+            boolean successful = selectedLot.bidFor(new Bid(bidder,value));
             if(successful) {
                 System.out.println("The bid for lot number " +
                                    lotNumber + " was successful.");
@@ -100,5 +100,29 @@ public class Auction
             return null;
         }
     }
+    
+    public void close()
+    {
+        for (Lot lot : listOfLots){
+            System.out.println("Lot#" + lot.getNumber() + ":" + lot.getDescription());
+        }
+    }
+    
+    public ArrayList<Lot> getUnsold()
+    {
+        ArrayList<Lot> unsoldLots = new ArrayList<Lot>();
+        return unsoldLots;
+    }
+    
+    public Lot removeLot(int number)
+    {
+        for (int i = 0; i < listOfLots.size();i++){
+            Lot lot = listOfLots.get(i);
+        if (lot.getNumber() == number){
+            listOfLots.remove(i);
+            return lot;
+        }
+        }
+        return null;
+    }
 }
-
