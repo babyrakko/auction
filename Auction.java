@@ -55,7 +55,7 @@ public class Auction
     {
         Lot selectedLot = getLot(lotNumber);
         if(selectedLot != null) {
-            Bid aBid = new Bid(bidder, value);
+            
             boolean successful = selectedLot.bidFor(new Bid(bidder,value));
             if(successful) {
                 System.out.println("The bid for lot number " +
@@ -100,24 +100,36 @@ public class Auction
             return null;
         }
     }
-    
+    //correction
     public void close()
     {
         for (Lot lot : listOfLots){
-            System.out.println("Lot#" + lot.getNumber() + ":" + lot.getDescription());
+            Bid highest = lot.getHighestBid(); //getHighestBid is in Lot class
+            if (highest == null) {
+                System.out.println("Nobidder for this lot");
+            } else {
+                System.out.println("The bidder is " + highest.getBidder().getName());                
+                System.out.println("The value is " + highest.getValue());
+            } 
+            }
         }
-    }
-    
+    //correction
     public ArrayList<Lot> getUnsold()
     {
-        ArrayList<Lot> unsoldLots = new ArrayList<Lot>();
+        ArrayList<Lot> unsoldLots = new ArrayList<Lot>();//calls new element "unsoldLots"
+        for (Lot aLot : listOfLots){
+            Bid highest = aLot.getHighestBid();
+            if (highest == null){
+                unsoldLots.add(aLot);
+            }
+        }
         return unsoldLots;
     }
     
     public Lot removeLot(int number)
     {
         for (int i = 0; i < listOfLots.size();i++){
-            Lot lot = listOfLots.get(i);
+        Lot lot = listOfLots.get(i);
         if (lot.getNumber() == number){
             listOfLots.remove(i);
             return lot;
